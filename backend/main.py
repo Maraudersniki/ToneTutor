@@ -1,7 +1,9 @@
 import os
 import json
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 import google.generativeai as genai
@@ -15,47 +17,44 @@ if API_KEY:
 
 app = FastAPI(title="ToneTutor API")
 
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(
+        status_code=500,
+        content={"message": "An internal error occurred. Please try again later."},
+    )
+
 # Setup CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:80", "YOUR_FRONTEND_URL"],
+    allow_origins=["*"],  # Allows all origins for the hackathon environment
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 
 class RewriteRequest(BaseModel):
-    draft_text: str = Field(..., max_length=3000)
-    selected_mode: str
-    formality: int = 3
-    length: int = 3
+    draft_text: str = Field(..., min_length=1, max_length=5000, description="The user's rough draft")
+    selected_mode: str = Field(..., max_length=50)
+    formality: int = Field(default=3, ge=1, le=5)
+    length: int = Field(default=3, ge=1, le=5)
 
 class RewriteResponse(BaseModel):
     revised_text: str
     feedback_points: list[str]
 
-@app.post("/api/rewrite", response_model=RewriteResponse)
-async def rewrite_message(request: RewriteRequest):
-    """
-    Rewrites a given draft message based on the selected mode, formality, and length.
-    
-    Returns the revised text and actionable feedback points.
-    """
-    if not API_KEY:
-        raise HTTPException(status_code=500, detail="Gemini API key is not configured.")
-        
-    if not request.draft_text.strip():
-        raise HTTPException(status_code=400, detail="Draft text cannot be empty.")
-        
-    if request.selected_mode == "campus_communicator":
+def format_prompt(draft: str, selected_mode: str, formality: int, length: int) -> str:
+    if selected_mode == "campus_communicator":
         mode_context = "You are helping a student email a professor for recommendations, extensions, or approvals."
         tone = "respectful, concise, and academic."
         feedback_instructions = "Ensure the 'feedback_points' array contains exactly 3 specific, educational points teaching the user why the changes were made."
-    elif request.selected_mode == "recruiter_bridge":
+    elif selected_mode == "recruiter_bridge":
         mode_context = "You are helping a junior developer cold-message a tech recruiter for jobs or internships."
         tone = "professional, confident, and action-oriented."
         feedback_instructions = "Ensure the 'feedback_points' array contains exactly 3 specific, educational points teaching the user why the changes were made."
-    elif request.selected_mode == "peer_collaborator":
+    elif selected_mode == "peer_collaborator":
         mode_context = "You are an expert communication coach helping a user message a project teammate, classmate, or peer."
         tone = "collaborative, friendly, and clear without being overly formal or stiff. It should strike a casually professional tone."
         feedback_instructions = """Ensure the 'feedback_points' array contains exactly 3 specific points:
@@ -63,7 +62,7 @@ async def rewrite_message(request: RewriteRequest):
     2. A tone change avoiding sounding too bossy or too passive.
     3. A clarity change making the request or update easier to understand."""
     else:
-        raise HTTPException(status_code=400, detail="Invalid mode selected.")
+        raise ValueError("Invalid mode selected.")
 
     system_prompt = f"""
 {mode_context} 
@@ -83,13 +82,30 @@ CRITICAL: Do NOT use literal placeholder letters like 'X', 'Y', or 'Z' in your o
 Example of BAD output: 'Why I removed X to sound confident:' 
 Example of GOOD output: 'Why I removed the word "just" to sound confident:'
 """
-    system_prompt += f"\n\nCRITICAL MODIFIERS:\n- Formality Level (1-5): {request.formality} (1 is extremely casual slang, 3 is standard professional, 5 is strictly formal/academic).\n- Length Level (1-5): {request.length} (1 is as short as possible, 3 is standard, 5 is highly detailed and expanded)."
+    system_prompt += f"\n\nCRITICAL MODIFIERS:\n- Formality Level (1-5): {formality} (1 is extremely casual slang, 3 is standard professional, 5 is strictly formal/academic).\n- Length Level (1-5): {length} (1 is as short as possible, 3 is standard, 5 is highly detailed and expanded)."
+    
+    return system_prompt + f"\n\nRough Draft:\n{draft}"
+
+@app.post("/api/rewrite", response_model=RewriteResponse)
+async def rewrite_text(request: RewriteRequest) -> RewriteResponse:
+    """
+    Rewrites a given draft message based on the selected mode, formality, and length.
+    
+    Returns the revised text and actionable feedback points.
+    """
+    if not API_KEY:
+        raise HTTPException(status_code=500, detail="Gemini API key is not configured.")
+        
+    if not request.draft_text.strip():
+        raise HTTPException(status_code=400, detail="Draft text cannot be empty.")
+        
+    try:
+        prompt = format_prompt(request.draft_text, request.selected_mode, request.formality, request.length)
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e))
     
     try:
         model = genai.GenerativeModel('gemini-3.5-flash-lite')
-        
-        prompt = system_prompt + f"\n\nRough Draft:\n{request.draft_text}"
-        
         response = model.generate_content(prompt)
         response_text = response.text.strip()
         

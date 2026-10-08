@@ -80,7 +80,7 @@ function App() {
         <div className="max-w-4xl mx-auto p-4 flex justify-end">
           <button 
             onClick={toggleTheme} 
-            className="p-2.5 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300"
+            className="p-2.5 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300 focus-visible:ring-2 focus-visible:ring-[#ea580c] focus-visible:outline-none"
             aria-label="Toggle Dark Mode"
           >
             {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -118,7 +118,7 @@ function App() {
               </ul>
               <button
                 onClick={() => setShowApp(true)}
-                className="w-full flex items-center justify-center gap-2 bg-[#eae9e4] border border-zinc-400 hover:bg-[#e0dfd9] hover:border-[#ea580c] dark:bg-[#181921] dark:border-zinc-800 dark:hover:bg-[#1f212c] dark:hover:border-[#38bdf8] text-[#ea580c] dark:text-[#38bdf8] py-3.5 px-6 rounded-lg font-bold transition-all text-sm uppercase tracking-widest"
+                className="w-full flex items-center justify-center gap-2 bg-[#eae9e4] border border-zinc-400 hover:bg-[#e0dfd9] hover:border-[#ea580c] dark:bg-[#181921] dark:border-zinc-800 dark:hover:bg-[#1f212c] dark:hover:border-[#38bdf8] text-[#ea580c] dark:text-[#38bdf8] py-3.5 px-6 rounded-lg font-bold transition-all text-sm uppercase tracking-widest focus-visible:ring-2 focus-visible:ring-[#ea580c] focus-visible:outline-none"
               >
                 Get Started <ArrowRight className="ml-2 h-5 w-5" />
               </button>
@@ -136,13 +136,13 @@ function App() {
       <div className="max-w-4xl mx-auto p-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-700 mb-8">
         <button 
           onClick={() => setShowApp(false)}
-          className="text-sm text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
+          className="text-sm text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors focus-visible:ring-2 focus-visible:ring-[#ea580c] focus-visible:outline-none"
         >
           &larr; Back home
         </button>
         <button 
           onClick={toggleTheme} 
-          className="p-2.5 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300"
+          className="p-2.5 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors text-gray-700 dark:text-gray-300 focus-visible:ring-2 focus-visible:ring-[#ea580c] focus-visible:outline-none"
           aria-label="Toggle Dark Mode"
         >
           {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
@@ -181,7 +181,7 @@ function App() {
                   name="mode"
                   value={mode}
                   onChange={(e) => setMode(e.target.value)}
-                  className="w-full bg-[#ebebeb]/50 text-zinc-900 border border-zinc-300 rounded-lg p-3.5 focus:outline-none focus:border-[#ea580c] dark:bg-black/50 dark:text-zinc-100 dark:border-zinc-800 dark:focus:border-[#38bdf8] focus:ring-1 focus:ring-opacity-40 transition-all font-mono text-xs md:text-sm mt-2"
+                  className="w-full bg-[#ebebeb]/50 text-zinc-900 border border-zinc-300 rounded-lg p-3.5 focus:outline-none focus:border-[#ea580c] dark:bg-black/50 dark:text-zinc-100 dark:border-zinc-800 dark:focus:border-[#38bdf8] focus:ring-1 focus:ring-opacity-40 transition-all font-mono text-xs md:text-sm mt-2 focus-visible:ring-2 focus-visible:ring-[#ea580c] focus-visible:outline-none"
                 >
                   <option value="campus_communicator">Campus Communicator (Students ↔ Professors)</option>
                   <option value="recruiter_bridge">Recruiter Bridge (Developers ↔ Recruiters)</option>
@@ -196,7 +196,7 @@ function App() {
                   </label>
                   <input 
                     type="range" min="1" max="5" value={formality} onChange={(e) => setFormality(parseInt(e.target.value))}
-                    className="w-full accent-[#ea580c] dark:accent-[#38bdf8] h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none" 
+                    className="w-full accent-[#ea580c] dark:accent-[#38bdf8] h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none focus-visible:ring-2 focus-visible:ring-[#ea580c] focus-visible:outline-none" 
                     aria-label="Adjust Formality"
                   />
                 </div>
@@ -206,7 +206,7 @@ function App() {
                   </label>
                   <input 
                     type="range" min="1" max="5" value={length} onChange={(e) => setLength(parseInt(e.target.value))}
-                    className="w-full accent-[#ea580c] dark:accent-[#38bdf8] h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none" 
+                    className="w-full accent-[#ea580c] dark:accent-[#38bdf8] h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none focus-visible:ring-2 focus-visible:ring-[#ea580c] focus-visible:outline-none" 
                     aria-label="Adjust Length"
                   />
                 </div>
@@ -221,7 +221,7 @@ function App() {
                     id="draft"
                     name="draft"
                     rows={6}
-                    className="w-full bg-[#ebebeb]/50 text-zinc-900 border border-zinc-300 rounded-lg p-3.5 focus:outline-none focus:border-[#ea580c] dark:bg-black/50 dark:text-zinc-100 dark:border-zinc-800 dark:focus:border-[#38bdf8] focus:ring-1 focus:ring-opacity-40 transition-all font-mono text-xs md:text-sm"
+                    className="w-full bg-[#ebebeb]/50 text-zinc-900 border border-zinc-300 rounded-lg p-3.5 focus:outline-none focus:border-[#ea580c] dark:bg-black/50 dark:text-zinc-100 dark:border-zinc-800 dark:focus:border-[#38bdf8] focus:ring-1 focus:ring-opacity-40 transition-all font-mono text-xs md:text-sm focus-visible:ring-2 focus-visible:ring-[#ea580c] focus-visible:outline-none"
                     placeholder="Paste your rough draft here..."
                     value={draft}
                     onChange={(e) => setDraft(e.target.value)}
@@ -246,7 +246,8 @@ function App() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full flex items-center justify-center gap-2 bg-[#eae9e4] border border-zinc-400 hover:bg-[#e0dfd9] hover:border-[#ea580c] dark:bg-[#181921] dark:border-zinc-800 dark:hover:bg-[#1f212c] dark:hover:border-[#38bdf8] text-[#ea580c] dark:text-[#38bdf8] py-3.5 px-6 rounded-lg font-bold transition-all text-sm uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 bg-[#eae9e4] border border-zinc-400 hover:bg-[#e0dfd9] hover:border-[#ea580c] dark:bg-[#181921] dark:border-zinc-800 dark:hover:bg-[#1f212c] dark:hover:border-[#38bdf8] text-[#ea580c] dark:text-[#38bdf8] py-3.5 px-6 rounded-lg font-bold transition-all text-sm uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed focus-visible:ring-2 focus-visible:ring-[#ea580c] focus-visible:outline-none"
+                  aria-label="Submit draft for AI polishing"
                 >
                   {loading ? (
                     <><Loader2 className="animate-spin -ml-1 mr-2 h-5 w-5" /> Polishing...</>
@@ -279,7 +280,7 @@ function App() {
 
         {/* Output Section */}
         {result && !loading && (
-          <div className="space-y-6">
+          <div className="space-y-6" aria-live="polite" tabIndex="0">
             
             {/* Card 1: Polished Draft */}
             <div className="bg-white/90 dark:bg-[#111219] border border-zinc-300 dark:border-zinc-800/80 rounded-lg p-5">
@@ -287,7 +288,7 @@ function App() {
                 <h3 className="text-lg leading-6 font-medium text-gray-900 dark:text-gray-100">The Polished Draft</h3>
                 <button
                   onClick={handleCopy}
-                  className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-600 shadow-sm text-xs font-medium rounded text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors"
+                  className="inline-flex items-center px-3 py-1.5 border border-gray-300 dark:border-gray-600 shadow-sm text-xs font-medium rounded text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors focus-visible:ring-2 focus-visible:ring-[#ea580c] focus-visible:outline-none"
                 >
                   {copied ? (
                     <><CheckCircle className="h-4 w-4 mr-1 text-green-500 dark:text-green-400" /> Copied</>
