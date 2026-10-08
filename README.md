@@ -1,64 +1,26 @@
 # ToneTutor
 
-ToneTutor is a full-stack web application designed to help users rewrite high-stakes professional messages. It not only polishes the drafts to suit specific niches but also teaches the user *why* the changes were made to improve their future communication skills.
+## Project Overview
+ToneTutor is an AI-powered communication coach built to help users elevate their high-stakes professional messages. Using Google's Gemini API, it provides instant, niche-specific rewriting and actionable feedback.
 
-## Problem it Solves
-Writing professional messages can be daunting. A slight misstep in tone when emailing a professor for an extension or cold-messaging a recruiter can lead to ignored emails or rejected requests. ToneTutor acts as an AI communication coach that fixes these mistakes and explains its reasoning.
+## Problem Statement Alignment
+Many professionals, students, and developers struggle with finding the right tone in high-stakes communications, such as cold-emailing recruiters or asking professors for recommendations. ToneTutor solves this problem by acting as a personalized communication coach. It not only polishes the rough draft to sound confident and professional, but it also provides specific, educational feedback points explaining *why* the changes were made, helping the user learn and improve their writing skills over time.
 
-## Core Features
-- **Dual-Niche Modes**: 
-  - *Campus Communicator*: Tailored for students emailing professors (respectful, concise, academic).
-  - *Recruiter Bridge*: Tailored for junior developers networking with tech recruiters (professional, confident, action-oriented).
-- **AI-Powered Polishing**: Re-writes rough drafts using the Google Gemini Pro API.
-- **Coach's Feedback**: Provides 3 specific reasons explaining what was changed and why.
+## Tech Stack & Efficiency
+- **Frontend**: React (Vite) + Tailwind CSS (Custom Dark Mode Bento UI)
+- **Backend**: Python (FastAPI) + Uvicorn
+- **AI Engine**: Google Gemini API (`gemini-3.5-flash-lite`)
+- **Deployment**: Dockerized for Google Cloud Run
 
-## Tech Stack
-- **Frontend**: React (Vite) + Tailwind CSS
-- **Backend**: Python (FastAPI)
-- **AI**: Google Gemini Pro API
+## How to Run
 
-## Setup Instructions
+### Backend
+1. `cd backend`
+2. Create a `.env` file and add your `GEMINI_API_KEY=your_key_here`
+3. `pip install -r requirements.txt`
+4. `uvicorn main:app --reload`
 
-### Prerequisites
-- Node.js and npm
-- Python 3.9+
-- A Google Gemini API Key
-
-### Backend Setup
-1. Navigate to the backend directory:
-   ```bash
-   cd backend
-   ```
-2. Create a virtual environment and activate it:
-   ```bash
-   python -m venv venv
-   source venv/Scripts/activate  # On Windows
-   ```
-3. Install the dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-4. Configure the environment variables:
-   - Copy `.env.example` to `.env`.
-   - Add your Gemini API Key: `GEMINI_API_KEY=your_api_key_here`
-5. Run the backend server:
-   ```bash
-   python main.py
-   # Or using uvicorn directly: uvicorn main:app --reload
-   ```
-   The backend will be running at `http://localhost:8000`.
-
-### Frontend Setup
-1. Navigate to the frontend directory:
-   ```bash
-   cd frontend
-   ```
-2. Install the dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
-   The frontend will be accessible at `http://localhost:5173`.
+### Frontend
+1. `cd frontend`
+2. `npm install`
+3. `npm run dev`

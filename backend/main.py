@@ -2,7 +2,7 @@ import os
 import json
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from dotenv import load_dotenv
 import google.generativeai as genai
 
@@ -18,14 +18,14 @@ app = FastAPI(title="ToneTutor API")
 # Setup CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust in production
+    allow_origins=["http://localhost:5173", "http://localhost:80", "YOUR_FRONTEND_URL"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
 class RewriteRequest(BaseModel):
-    draft_text: str
+    draft_text: str = Field(..., max_length=3000)
     selected_mode: str
     formality: int = 3
     length: int = 3
@@ -36,6 +36,11 @@ class RewriteResponse(BaseModel):
 
 @app.post("/api/rewrite", response_model=RewriteResponse)
 async def rewrite_message(request: RewriteRequest):
+    """
+    Rewrites a given draft message based on the selected mode, formality, and length.
+    
+    Returns the revised text and actionable feedback points.
+    """
     if not API_KEY:
         raise HTTPException(status_code=500, detail="Gemini API key is not configured.")
         

@@ -74,7 +74,7 @@ function App() {
 
   if (!showApp) {
     return (
-      <div className="min-h-screen bg-[#f3f2ee] text-zinc-800 dark:bg-[#0d0e15] dark:text-zinc-300 transition-colors duration-500 font-mono p-4 md:p-8">
+      <main className="min-h-screen bg-[#f3f2ee] text-zinc-800 dark:bg-[#0d0e15] dark:text-zinc-300 transition-colors duration-500 font-mono p-4 md:p-8">
         
         {/* Navbar / Header with Toggle Button */}
         <div className="max-w-4xl mx-auto p-4 flex justify-end">
@@ -88,7 +88,7 @@ function App() {
         </div>
 
         <div className="flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-          <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
+          <header className="sm:mx-auto sm:w-full sm:max-w-md text-center">
             <div className="mb-6">
               <span className="text-[10px] text-zinc-500 tracking-widest uppercase border border-zinc-300 dark:border-zinc-800 rounded px-2 py-0.5 inline-block mb-2">SYSTEM: ACTIVE</span>
               <h1 className="text-2xl md:text-3xl font-extrabold tracking-wider text-[#ea580c] dark:text-[#38bdf8] uppercase">
@@ -98,6 +98,8 @@ function App() {
             <p className="mt-2 text-lg text-gray-600 dark:text-gray-300 mb-8">
               Your AI-powered communication coach. Write professional messages with confidence and learn how to improve your tone.
             </p>
+          </header>
+          <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
             <div className="bg-white/70 border border-zinc-300/80 rounded-xl p-5 md:p-6 mb-6 dark:bg-[#12131a] dark:border-zinc-800/90 relative group overflow-hidden">
               <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">Master high-stakes emails</h2>
               <ul className="text-left space-y-3 mb-8 text-gray-600 dark:text-gray-300">
@@ -123,12 +125,12 @@ function App() {
             </div>
           </div>
         </div>
-      </div>
+      </main>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#f3f2ee] text-zinc-800 dark:bg-[#0d0e15] dark:text-zinc-300 transition-colors duration-500 font-mono p-4 md:p-8">
+    <main className="min-h-screen bg-[#f3f2ee] text-zinc-800 dark:bg-[#0d0e15] dark:text-zinc-300 transition-colors duration-500 font-mono p-4 md:p-8">
       
       {/* Navbar / Header with Toggle Button */}
       <div className="max-w-4xl mx-auto p-4 flex justify-between items-center border-b border-gray-200 dark:border-gray-700 mb-8">
@@ -150,7 +152,7 @@ function App() {
       <div className="max-w-4xl mx-auto p-4 space-y-8">
         
         {/* Header */}
-        <div className="text-center">
+        <header className="text-center">
           <div className="mb-2">
             <span className="text-[10px] text-zinc-500 tracking-widest uppercase border border-zinc-300 dark:border-zinc-800 rounded px-2 py-0.5 inline-block mb-2">SYSTEM: ACTIVE</span>
             <h1 className="text-2xl md:text-3xl font-extrabold tracking-wider text-[#ea580c] dark:text-[#38bdf8] uppercase">ToneTutor</h1>
@@ -158,7 +160,7 @@ function App() {
           <p className="mt-3 text-lg text-gray-500 dark:text-gray-400">
             Elevate your high-stakes professional messages.
           </p>
-        </div>
+        </header>
 
         {/* Input Section */}
         <div className="bg-white/70 border border-zinc-300/80 rounded-xl p-5 md:p-6 mb-6 dark:bg-[#12131a] dark:border-zinc-800/90 relative group overflow-hidden">
@@ -195,6 +197,7 @@ function App() {
                   <input 
                     type="range" min="1" max="5" value={formality} onChange={(e) => setFormality(parseInt(e.target.value))}
                     className="w-full accent-[#ea580c] dark:accent-[#38bdf8] h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none" 
+                    aria-label="Adjust Formality"
                   />
                 </div>
                 <div>
@@ -204,6 +207,7 @@ function App() {
                   <input 
                     type="range" min="1" max="5" value={length} onChange={(e) => setLength(parseInt(e.target.value))}
                     className="w-full accent-[#ea580c] dark:accent-[#38bdf8] h-1 bg-zinc-200 dark:bg-zinc-800 rounded-lg appearance-none" 
+                    aria-label="Adjust Length"
                   />
                 </div>
               </div>
@@ -324,7 +328,7 @@ function App() {
         )}
 
       </div>
-    </div>
+    </main>
   );
 }
 
